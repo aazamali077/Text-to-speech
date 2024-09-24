@@ -1,12 +1,17 @@
 let speech = new SpeechSynthesisUtterance();
 let addVoices = [];
 let voiceSelect = document.querySelector("select");
-window.speechSynthesis.onvoiceschanged = ()=>{
-    voices = window.speechSynthesis.getVoices();
-    speech.voice = voices[0];
 
-    
+window.speechSynthesis.onvoiceschanged = ()=>{
+    addVoices = window.speechSynthesis.getVoices();
+    speech.voice = addVoices[0];
+    console.log(addVoices);
+    addVoices.forEach((voice, i)=>(voiceSelect.options[i] = new Option(voice.name, i)))
 };
+
+voiceSelect.addEventListener("change", ()=>{
+    speech.voice = addVoices[voiceSelect.value];
+});
 
 
 document.querySelector("button").addEventListener("click", ()=>{
